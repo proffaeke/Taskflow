@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Log In | TaskFlow</title>
+
+    <link href="./assets/src/output.css" rel="stylesheet" />
+  </head>
+
+  <body class="min-h-screen bg-[#F8F7F4] text-[#2F3033]">
+    <!-- Navbar -->
+    <header class="w-full">
+      <nav
+        class="mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-8"
+      >
+        <!-- Logo -->
+        <a href="./index.html" class="flex items-center gap-2">
+          <img
+            src="./assets/logos/logo-taskflow.png"
+            alt="TaskFlow logo"
+            class="h-12 w-12 object-contain"
+          />
+
+          <span class="text-2xl font-semibold tracking-tight"> TaskFlow </span>
+        </a>
+
+        <!-- Signup -->
+        <div class="text-sm">
+          <span class="text-[#6B6B6B]">Don't have an account?</span>
+
+          <a
+            href="./signup.html"
+            class="ml-2 font-semibold text-[#2F3033] transition hover:text-[#B89B5E]"
+          >
+            Sign Up
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Login Section -->
+    <main>
+      <section
+        class="mx-auto flex min-h-[calc(100vh-100px)] max-w-7xl items-center justify-center px-6 py-12 lg:px-8"
+      >
+        <!-- Login Card -->
+        <div class="w-full max-w-md">
+          <!-- Heading -->
+          <div class="mb-8 text-center">
+            <p
+              class="mb-4 text-xs font-semibold tracking-[0.3em] text-[#B89B5E]"
+            >
+              WELCOME BACK
+            </p>
+
+            <h1
+              class="text-4xl font-bold tracking-tight text-[#2F3033] md:text-5xl"
+            >
+              Log in to TaskFlow
+            </h1>
+
+            <p class="mt-4 text-sm leading-6 text-[#6B6B6B]">
+              Welcome back. Stay organized and keep making progress.
+            </p>
+          </div>
+
+          <!-- Form -->
+          <form class="space-y-5">
+            <!-- Email -->
+            <div>
+              <label
+                for="email"
+                class="mb-2 block text-sm font-medium text-[#2F3033]"
+              >
+                Email address
+              </label>
+
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="you@example.com"
+                required
+                class="w-full border border-[#D8D5CF] bg-white px-4 py-3.5 text-sm text-[#2F3033] outline-none transition placeholder:text-[#A3A3A3] focus:border-[#B89B5E] focus:ring-1 focus:ring-[#B89B5E]"
+              />
+            </div>
+
+            <!-- Password -->
+            <div>
+              <div class="mb-2 flex items-center justify-between">
+                <label
+                  for="password"
+                  class="block text-sm font-medium text-[#2F3033]"
+                >
+                  Password
+                </label>
+
+                <a
+                  href="#"
+                  class="text-xs font-medium text-[#6B6B6B] transition hover:text-[#B89B5E]"
+                >
+                  Forgot password?
+                </a>
+              </div>
+
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter your password"
+                required
+                class="w-full border border-[#D8D5CF] bg-white px-4 py-3.5 text-sm text-[#2F3033] outline-none transition placeholder:text-[#A3A3A3] focus:border-[#B89B5E] focus:ring-1 focus:ring-[#B89B5E]"
+              />
+            </div>
+
+            <!-- Remember Me -->
+            <div class="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="remember"
+                class="h-4 w-4 accent-[#B89B5E]"
+              />
+
+              <label for="remember" class="text-sm text-[#6B6B6B]">
+                Remember me
+              </label>
+            </div>
+
+            <!-- Login Button -->
+            <button
+              type="submit"
+              class="w-full bg-[#2F3033] px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-[#B89B5E]"
+            >
+              Log In
+            </button>
+          </form>
+
+          <!-- Divider -->
+          <div class="my-8 flex items-center gap-4">
+            <div class="h-px flex-1 bg-[#D8D5CF]"></div>
+
+            <span class="text-xs text-[#9A9A9A]"> OR </span>
+
+            <div class="h-px flex-1 bg-[#D8D5CF]"></div>
+          </div>
+
+          <!-- Signup -->
+          <p class="text-center text-sm text-[#6B6B6B]">
+            Don't have an account?
+
+            <a
+              href="./signup.html"
+              class="font-semibold text-[#2F3033] transition hover:text-[#B89B5E]"
+            >
+              Create one
+            </a>
+          </p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
