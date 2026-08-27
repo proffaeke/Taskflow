@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Tasks | TaskFlow</title>
+    <link href="./assets/src/output.css" rel="stylesheet" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+
+  <body class="min-h-screen bg-[#F8F7F4] text-[#2F3033]">
+    <!-- ==================== -->
+    <!-- Sidebar -->
+    <!-- ==================== -->
+
+    <aside
+      id="sidebar"
+      class="fixed left-0 top-0 z-50 flex h-screen w-64 -translate-x-full flex-col border-r border-[#E3E0D9] bg-[#F8F7F4] transition-transform duration-300 ease-in-out md:translate-x-0"
+    >
+      <!-- Logo -->
+      <div class="flex items-center gap-2 px-6 py-6">
+        <img
+          src="./assets/logos/logo-taskflow.png"
+          alt="TaskFlow logo"
+          class="h-11 w-11 object-contain"
+        />
+
+        <span class="text-2xl font-semibold tracking-tight"> TaskFlow </span>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="flex-1 px-4 py-6">
+        <p
+          class="mb-4 px-3 text-xs font-semibold tracking-[0.2em] text-[#9A9A9A]"
+        >
+          MENU
+        </p>
+
+        <!-- Dashboard -->
+        <a
+          href="./dashboard.html"
+          class="mb-2 flex items-center gap-3 px-4 py-3 text-sm font-medium text-[#6B6B6B] transition hover:bg-white hover:text-[#2F3033]"
+        >
+          <i data-lucide="layout-dashboard" class="h-5 w-5"></i>
+          <span>Dashboard</span>
+        </a>
+
+        <!-- My Tasks -->
+        <a
+          href="./tasks.html"
+          class="mb-2 flex items-center gap-3 bg-[#2F3033] px-4 py-3 text-sm font-medium text-white"
+        >
+          <i data-lucide="list-checks" class="h-5 w-5"></i>
+          <span>My Tasks</span>
+        </a>
+
+        <!-- Settings -->
+        <a
+          href="./settings.html"
+          class="mb-2 flex items-center gap-3 px-4 py-3 text-sm font-medium text-[#6B6B6B] transition hover:bg-white hover:text-[#2F3033]"
+        >
+          <i data-lucide="settings" class="h-5 w-5"></i>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <!-- Logout -->
+      <div class="border-t border-[#E3E0D9] p-4">
+        <button
+          id="logoutBtn"
+          type="button"
+          class="flex w-full items-center gap-3 px-4 py-3 text-sm font-medium text-[#6B6B6B] transition hover:bg-white hover:text-[#2F3033]"
+        >
+          <i data-lucide="log-out" class="h-5 w-5"></i>
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Sidebar Overlay -->
+
+    <div
+      id="sidebarOverlay"
+      class="fixed inset-0 z-40 hidden bg-black/30 md:hidden"
+    ></div>
+
+    <!-- ==================== -->
+    <!-- Main Content -->
+    <!-- ==================== -->
+
+    <main class="min-h-screen md:ml-64">
+      <!-- ==================== -->
+      <!-- Fixed Navbar -->
+      <!-- ==================== -->
+
+      <header
+        class="fixed left-0 right-0 top-0 z-30 flex h-[81px] items-center justify-between border-b border-[#E3E0D9] bg-[#F8F7F4] px-6 lg:left-64 lg:px-10"
+      >
+        <!-- Mobile Menu -->
+
+        <div class="flex items-center gap-3 md:hidden">
+          <!-- Mobile Menu -->
+          <button
+            id="mobileMenuBtn"
+            type="button"
+            class="flex h-10 w-10 items-center justify-center text-[#2F3033]"
+            aria-label="Open menu"
+          >
+            <i data-lucide="menu" class="h-6 w-6"></i>
+          </button>
+
+          <!-- Mobile Logo -->
+          <a href="./dashboard.html" class="flex items-center gap-2">
+            <img
+              src="./assets/logos/logo-taskflow.png"
+              alt="TaskFlow logo"
+              class="h-9 w-9 object-contain"
+            />
+
+            <span class="text-xl font-semibold tracking-tight"> TaskFlow </span>
+          </a>
+        </div>
+
+        <!-- Desktop Spacer -->
+
+        <div class="hidden md:block"></div>
+
+        <!-- User -->
+
+        <div class="flex items-center gap-3">
+          <div
+            id="userInitial"
+            class="flex h-10 w-10 items-center justify-center rounded-full bg-[#2F3033] text-sm font-semibold text-white"
+          >
+            A
+          </div>
+
+          <div class="hidden sm:block">
+            <p id="headerUserName" class="text-sm font-semibold">Abubakar</p>
+
+            <p class="text-xs text-[#9A9A9A]">Welcome back</p>
+          </div>
+        </div>
+      </header>
+
+      <!-- ==================== -->
+      <!-- Page Content -->
+      <!-- ==================== -->
+
+      <div class="mx-auto max-w-7xl px-6 pb-12 pt-[110px] lg:px-10">
+        <!-- ==================== -->
+        <!-- Page Heading -->
+        <!-- ==================== -->
+
+        <section>
+          <p class="mb-3 text-xs font-semibold tracking-[0.3em] text-[#B89B5E]">
+            STAY ORGANIZED
+          </p>
+
+          <div
+            class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between"
+          >
+            <div>
+              <h1 class="text-3xl font-bold tracking-tight md:text-4xl">
+                My Tasks
+              </h1>
+
+              <p class="mt-3 text-sm text-[#6B6B6B] md:text-base">
+                Manage your tasks and stay on track.
+              </p>
+            </div>
+
+            <!-- Add Task Button -->
+
+            <button
+              id="addTaskBtn"
+              type="button"
+              class="inline-flex w-fit items-center gap-2 bg-[#2F3033] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#B89B5E]"
+            >
+              <i data-lucide="plus" class="h-4 w-4"></i>
+              Add Task
+            </button>
+          </div>
+        </section>
+
+        <!-- ==================== -->
+        <!-- Search + Filters -->
+        <!-- ==================== -->
+
+        <section class="mt-8">
+          <!-- Search -->
+
+          <div class="relative">
+            <i
+              data-lucide="search"
+              class="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[#9A9A9A]"
+            ></i>
+
+            <input
+              id="taskSearch"
+              type="search"
+              placeholder="Search tasks..."
+              class="w-full border border-[#D8D5CF] bg-white py-3.5 pl-12 pr-4 text-sm outline-none transition placeholder:text-[#A3A3A3] focus:border-[#B89B5E] focus:ring-1 focus:ring-[#B89B5E]"
+            />
+          </div>
+
+          <!-- Filters -->
+
+          <div class="mt-5 flex flex-wrap gap-2">
+            <button
+              type="button"
+              data-filter="all"
+              class="bg-[#2F3033] px-5 py-2.5 text-xs font-semibold text-white"
+            >
+              All
+            </button>
+
+            <button
+              type="button"
+              data-filter="active"
+              class="border border-[#D8D5CF] bg-white px-5 py-2.5 text-xs font-semibold text-[#6B6B6B] transition hover:border-[#2F3033] hover:text-[#2F3033]"
+            >
+              Active
+            </button>
+
+            <button
+              type="button"
+              data-filter="completed"
+              class="border border-[#D8D5CF] bg-white px-5 py-2.5 text-xs font-semibold text-[#6B6B6B] transition hover:border-[#2F3033] hover:text-[#2F3033]"
+            >
+              Completed
+            </button>
+          </div>
+        </section>
+
+        <!-- ==================== -->
+        <!-- Task List -->
+        <!-- ==================== -->
+
+        <section class="mt-10">
+          <!-- TODAY -->
+
+          <div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h2 class="text-lg font-bold">Today</h2>
+
+                <p id="todayTaskCount" class="mt-1 text-xs text-[#9A9A9A]">
+                  3 Tasks
+                </p>
+              </div>
+            </div>
+
+            <!-- Today Tasks -->
+
+            <div
+              id="todayTasks"
+              class="mt-4 divide-y divide-[#E3E0D9] border border-[#E3E0D9] bg-white"
+            >
+              <!-- Task -->
+
+              <div
+                class="group flex items-center gap-4 px-5 py-4 transition hover:bg-[#FAF9F7]"
+              >
+                <input
+                  type="checkbox"
+                  class="h-4 w-4 shrink-0 accent-[#B89B5E]"
+                />
+
+                <div class="min-w-0 flex-1">
+                  <p class="truncate text-sm font-medium">
+                    Complete TaskFlow project
+                  </p>
+
+                  <p class="mt-1 text-xs text-[#9A9A9A]">Today</p>
+                </div>
+
+                <button
+                  type="button"
+                  class="flex h-8 w-8 shrink-0 items-center justify-center text-[#9A9A9A] transition hover:text-[#2F3033]"
+                  aria-label="Task options"
+                >
+                  <i data-lucide="more-vertical" class="h-5 w-5"></i>
+                </button>
+              </div>
+
+              <!-- Task -->
+
+              <div
+                class="group flex items-center gap-4 px-5 py-4 transition hover:bg-[#FAF9F7]"
+              >
+                <input
+                  type="checkbox"
+                  class="h-4 w-4 shrink-0 accent-[#B89B5E]"
+                />
+
+                <div class="min-w-0 flex-1">
+                  <p class="truncate text-sm font-medium">
+                    Practice JavaScript
+                  </p>
+
+                  <p class="mt-1 text-xs text-[#9A9A9A]">Today</p>
+                </div>
+
+                <button
+                  type="button"
+                  class="flex h-8 w-8 shrink-0 items-center justify-center text-[#9A9A9A] transition hover:text-[#2F3033]"
+                  aria-label="Task options"
+                >
+                  <i data-lucide="more-vertical" class="h-5 w-5"></i>
+                </button>
+              </div>
+
+              <!-- Completed Task -->
+
+              <div
+                class="group flex items-center gap-4 px-5 py-4 transition hover:bg-[#FAF9F7]"
+              >
+                <input
+                  type="checkbox"
+                  checked
+                  class="h-4 w-4 shrink-0 accent-[#B89B5E]"
+                />
+
+                <div class="min-w-0 flex-1">
+                  <p
+                    class="truncate text-sm font-medium text-[#9A9A9A] line-through"
+                  >
+                    Review TaskFlow plan
+                  </p>
+
+                  <p class="mt-1 text-xs text-[#9A9A9A]">Completed</p>
+                </div>
+
+                <button
+                  type="button"
+                  class="flex h-8 w-8 shrink-0 items-center justify-center text-[#9A9A9A] transition hover:text-[#2F3033]"
+                  aria-label="Task options"
+                >
+                  <i data-lucide="more-vertical" class="h-5 w-5"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==================== -->
+          <!-- Due Tasks -->
+          <!-- ==================== -->
+
+          <div class="mt-10">
+            <div class="flex items-center justify-between">
+              <div>
+                <h2 class="text-lg font-bold">Due Tasks</h2>
+
+                <p id="dueTaskCount" class="mt-1 text-xs text-[#9A9A9A]">
+                  Tasks that need your attention
+                </p>
+              </div>
+            </div>
+
+            <!-- Due Tasks List -->
+
+            <div
+              id="dueTasks"
+              class="mt-4 divide-y divide-[#E3E0D9] border border-[#E3E0D9] bg-white"
+            >
+              <!-- Due Task -->
+
+              <div
+                class="group flex items-center gap-4 px-5 py-4 transition hover:bg-[#FAF9F7]"
+              >
+                <div
+                  class="flex h-9 w-9 shrink-0 items-center justify-center bg-[#F8F7F4]"
+                >
+                  <i
+                    data-lucide="alert-circle"
+                    class="h-5 w-5 text-[#B89B5E]"
+                  ></i>
+                </div>
+
+                <div class="min-w-0 flex-1">
+                  <p class="truncate text-sm font-medium">
+                    Complete TaskFlow project
+                  </p>
+
+                  <p class="mt-1 text-xs text-[#B89B5E]">Due today</p>
+                </div>
+
+                <button
+                  type="button"
+                  class="flex h-8 w-8 shrink-0 items-center justify-center text-[#9A9A9A] transition hover:text-[#2F3033]"
+                  aria-label="Task options"
+                >
+                  <i data-lucide="more-vertical" class="h-5 w-5"></i>
+                </button>
+              </div>
+
+              <!-- Due Task -->
+
+              <div
+                class="group flex items-center gap-4 px-5 py-4 transition hover:bg-[#FAF9F7]"
+              >
+                <div
+                  class="flex h-9 w-9 shrink-0 items-center justify-center bg-[#F8F7F4]"
+                >
+                  <i
+                    data-lucide="alert-circle"
+                    class="h-5 w-5 text-[#B89B5E]"
+                  ></i>
+                </div>
+
+                <div class="min-w-0 flex-1">
+                  <p class="truncate text-sm font-medium">
+                    Practice JavaScript
+                  </p>
+
+                  <p class="mt-1 text-xs text-[#B89B5E]">Due today</p>
+                </div>
+
+                <button
+                  type="button"
+                  class="flex h-8 w-8 shrink-0 items-center justify-center text-[#9A9A9A] transition hover:text-[#2F3033]"
+                  aria-label="Task options"
+                >
+                  <i data-lucide="more-vertical" class="h-5 w-5"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==================== -->
+          <!-- Upcoming -->
+          <!-- ==================== -->
+
+          <div class="mt-10">
+            <div>
+              <h2 class="text-lg font-bold">Upcoming</h2>
+
+              <p class="mt-1 text-xs text-[#9A9A9A]">Tasks coming up</p>
+            </div>
+
+            <!-- Upcoming Tasks -->
+
+            <div
+              id="upcomingTasks"
+              class="mt-4 divide-y divide-[#E3E0D9] border border-[#E3E0D9] bg-white"
+            >
+              <!-- Task -->
+
+              <div
+                class="group flex items-center gap-4 px-5 py-4 transition hover:bg-[#FAF9F7]"
+              >
+                <input
+                  type="checkbox"
+                  class="h-4 w-4 shrink-0 accent-[#B89B5E]"
+                />
+
+                <div class="min-w-0 flex-1">
+                  <p class="truncate text-sm font-medium">Learn Tailwind CSS</p>
+
+                  <p class="mt-1 text-xs text-[#9A9A9A]">Tomorrow</p>
+                </div>
+
+                <button
+                  type="button"
+                  class="flex h-8 w-8 shrink-0 items-center justify-center text-[#9A9A9A] transition hover:text-[#2F3033]"
+                  aria-label="Task options"
+                >
+                  <i data-lucide="more-vertical" class="h-5 w-5"></i>
+                </button>
+              </div>
+
+              <!-- Task -->
+
+              <div
+                class="group flex items-center gap-4 px-5 py-4 transition hover:bg-[#FAF9F7]"
+              >
+                <input
+                  type="checkbox"
+                  class="h-4 w-4 shrink-0 accent-[#B89B5E]"
+                />
+
+                <div class="min-w-0 flex-1">
+                  <p class="truncate text-sm font-medium">Work on portfolio</p>
+
+                  <p class="mt-1 text-xs text-[#9A9A9A]">Aug 29</p>
+                </div>
+
+                <button
+                  type="button"
+                  class="flex h-8 w-8 shrink-0 items-center justify-center text-[#9A9A9A] transition hover:text-[#2F3033]"
+                  aria-label="Task options"
+                >
+                  <i data-lucide="more-vertical" class="h-5 w-5"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==================== -->
+          <!-- Empty State -->
+          <!-- ==================== -->
+
+          <div
+            id="emptyTasks"
+            class="mt-10 hidden border border-[#E3E0D9] bg-white px-6 py-14 text-center"
+          >
+            <i
+              data-lucide="clipboard-list"
+              class="mx-auto h-10 w-10 text-[#B89B5E]"
+            ></i>
+
+            <h3 class="mt-4 text-base font-semibold">No tasks yet</h3>
+
+            <p class="mx-auto mt-2 max-w-sm text-sm leading-6 text-[#9A9A9A]">
+              You don't have any tasks here yet. Create your first task and
+              start making progress.
+            </p>
+
+            <button
+              type="button"
+              class="mt-6 inline-flex items-center gap-2 bg-[#2F3033] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#B89B5E]"
+            >
+              <i data-lucide="plus" class="h-4 w-4"></i>
+              Add Your First Task
+            </button>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- ==================== -->
+    <!-- Add Task Modal -->
+    <!-- ==================== -->
+
+    <div
+      id="taskModal"
+      class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/30 px-6 py-8"
+    >
+      <div
+        class="w-full max-w-lg border border-[#E3E0D9] bg-[#F8F7F4] p-6 shadow-xl md:p-8"
+      >
+        <!-- Modal Header -->
+
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <p class="text-xs font-semibold tracking-[0.2em] text-[#B89B5E]">
+              NEW TASK
+            </p>
+
+            <h2 class="mt-2 text-2xl font-bold">Add Task</h2>
+          </div>
+
+          <button
+            id="closeTaskModal"
+            type="button"
+            class="flex h-9 w-9 items-center justify-center text-[#6B6B6B] transition hover:bg-white hover:text-[#2F3033]"
+            aria-label="Close modal"
+          >
+            <i data-lucide="x" class="h-5 w-5"></i>
+          </button>
+        </div>
+
+        <!-- Form -->
+
+        <form id="taskForm" class="mt-7 space-y-5">
+          <!-- Task Name -->
+
+          <div>
+            <label for="taskName" class="mb-2 block text-sm font-medium">
+              Task name
+            </label>
+
+            <input
+              id="taskName"
+              type="text"
+              placeholder="What needs to be done?"
+              class="w-full border border-[#D8D5CF] bg-white px-4 py-3.5 text-sm outline-none transition placeholder:text-[#A3A3A3] focus:border-[#B89B5E] focus:ring-1 focus:ring-[#B89B5E]"
+            />
+          </div>
+
+          <!-- Description -->
+
+          <div>
+            <label for="taskDescription" class="mb-2 block text-sm font-medium">
+              Description
+            </label>
+
+            <textarea
+              id="taskDescription"
+              rows="3"
+              placeholder="Add some details..."
+              class="w-full resize-none border border-[#D8D5CF] bg-white px-4 py-3.5 text-sm outline-none transition placeholder:text-[#A3A3A3] focus:border-[#B89B5E] focus:ring-1 focus:ring-[#B89B5E]"
+            ></textarea>
+          </div>
+
+          <!-- Due Date + Priority -->
+
+          <div class="grid gap-5 sm:grid-cols-2">
+            <!-- Due Date -->
+
+            <div>
+              <label for="taskDueDate" class="mb-2 block text-sm font-medium">
+                Due date
+              </label>
+
+              <input
+                id="taskDueDate"
+                type="date"
+                class="w-full border border-[#D8D5CF] bg-white px-4 py-3.5 text-sm outline-none transition focus:border-[#B89B5E] focus:ring-1 focus:ring-[#B89B5E]"
+              />
+            </div>
+
+            <!-- Priority -->
+
+            <div>
+              <label for="taskPriority" class="mb-2 block text-sm font-medium">
+                Priority
+              </label>
+
+              <select
+                id="taskPriority"
+                class="w-full border border-[#D8D5CF] bg-white px-4 py-3.5 text-sm outline-none transition focus:border-[#B89B5E] focus:ring-1 focus:ring-[#B89B5E]"
+              >
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Buttons -->
+
+          <div class="flex justify-end gap-3 pt-3">
+            <button
+              id="cancelTask"
+              type="button"
+              class="border border-[#2F3033] px-5 py-3 text-sm font-semibold text-[#2F3033] transition hover:bg-[#2F3033] hover:text-white"
+            >
+              Cancel
+            </button>
+
+            <button
+              type="submit"
+              class="bg-[#2F3033] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#B89B5E]"
+            >
+              Add Task
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="./assets/js/tasks.js"></script>
+  </body>
+</html>
