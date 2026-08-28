@@ -348,14 +348,14 @@
   .h-16 {
     height: calc(var(--spacing) * 16);
   }
+  .h-20\.25 {
+    height: calc(var(--spacing) * 20.25);
+  }
   .h-72 {
     height: calc(var(--spacing) * 72);
   }
   .h-\[81px\] {
     height: 81px;
-  }
-  .h-fit {
-    height: fit-content;
   }
   .h-full {
     height: 100%;
@@ -459,9 +459,6 @@
   .flex-col {
     flex-direction: column;
   }
-  .flex-nowrap {
-    flex-wrap: nowrap;
-  }
   .flex-wrap {
     flex-wrap: wrap;
   }
@@ -498,9 +495,6 @@
   .gap-6 {
     gap: calc(var(--spacing) * 6);
   }
-  .gap-8 {
-    gap: calc(var(--spacing) * 8);
-  }
   .gap-12 {
     gap: calc(var(--spacing) * 12);
   }
@@ -509,10 +503,11 @@
     margin-block-start: calc(calc(var(--spacing) * 5) * var(--tw-space-y-reverse));
     margin-block-end: calc(calc(var(--spacing) * 5) * calc(1 - var(--tw-space-y-reverse)));
   }
-  :where(.space-y-8 > :not(:last-child)) {
-    --tw-space-y-reverse: 0;
-    margin-block-start: calc(calc(var(--spacing) * 8) * var(--tw-space-y-reverse));
-    margin-block-end: calc(calc(var(--spacing) * 8) * calc(1 - var(--tw-space-y-reverse)));
+  .gap-x-2 {
+    column-gap: calc(var(--spacing) * 2);
+  }
+  .gap-y-1 {
+    row-gap: var(--spacing);
   }
   :where(.divide-y > :not(:last-child)) {
     --tw-divide-y-reverse: 0;
@@ -585,9 +580,6 @@
   .p-1 {
     padding: var(--spacing);
   }
-  .p-2 {
-    padding: calc(var(--spacing) * 2);
-  }
   .p-4 {
     padding: calc(var(--spacing) * 4);
   }
@@ -633,9 +625,6 @@
   .py-8 {
     padding-block: calc(var(--spacing) * 8);
   }
-  .py-10 {
-    padding-block: calc(var(--spacing) * 10);
-  }
   .py-12 {
     padding-block: calc(var(--spacing) * 12);
   }
@@ -656,6 +645,9 @@
   }
   .pt-8 {
     padding-top: calc(var(--spacing) * 8);
+  }
+  .pt-27\.5 {
+    padding-top: calc(var(--spacing) * 27.5);
   }
   .pt-\[110px\] {
     padding-top: 110px;
@@ -761,9 +753,6 @@
   .break-all {
     word-break: break-all;
   }
-  .whitespace-nowrap {
-    white-space: nowrap;
-  }
   .text-\[\#2F3033\] {
     color: #2F3033;
   }
@@ -830,9 +819,6 @@
     }
     .hover\:bg-\[\#B89B5E\]:hover {
       background-color: #B89B5E;
-    }
-    .hover\:bg-\[\#F8F7F4\]:hover {
-      background-color: #F8F7F4;
     }
     .hover\:bg-\[\#FAF9F7\]:hover {
       background-color: #FAF9F7;
@@ -968,9 +954,6 @@
     }
     .lg\:grid-cols-2 {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .lg\:grid-cols-\[220px_1fr\] {
-      grid-template-columns: 220px 1fr;
     }
     .lg\:px-8 {
       padding-inline: calc(var(--spacing) * 8);
