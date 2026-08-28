@@ -1,3 +1,4 @@
+requireAuth();
 lucide.createIcons();
 
 const mobileMenuBtn = document.getElementById("mobileMenuBtn");

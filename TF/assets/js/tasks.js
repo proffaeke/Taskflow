@@ -18,3 +18,5 @@ sidebarOverlay.addEventListener("click", () => {
 
   sidebarOverlay.classList.add("hidden");
 });
+
+requireAuth();
