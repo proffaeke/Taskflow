@@ -1,4 +1,5 @@
 requireAuth();
+
 lucide.createIcons();
 
 const mobileMenuBtn = document.getElementById("mobileMenuBtn");
@@ -16,4 +17,16 @@ sidebarOverlay.addEventListener("click", () => {
   sidebar.classList.remove("translate-x-0");
 
   sidebarOverlay.classList.add("hidden");
+});
+
+// ====================
+// Logout
+// ====================
+
+const logoutBtn = document.getElementById("logoutBtn");
+
+logoutBtn.addEventListener("click", function () {
+  logoutUser();
+
+  window.location.href = "./login.html";
 });

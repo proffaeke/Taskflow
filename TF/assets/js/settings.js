@@ -21,3 +21,15 @@ sidebarOverlay.addEventListener("click", () => {
 });
 
 requireAuth();
+
+// ====================
+// Logout
+// ====================
+
+const logoutBtn = document.getElementById("logoutBtn");
+
+logoutBtn.addEventListener("click", function () {
+  logoutUser();
+
+  window.location.href = "./login.html";
+});
