@@ -74,11 +74,8 @@ taskForm.addEventListener("submit", function (event) {
     .value.trim();
 
   const taskDueDate = document.getElementById("taskDueDate").value;
-
   const taskPriority = document.getElementById("taskPriority").value;
-
   const currentUser = getCurrentUser();
-
   const tasks = getData(TASKS_KEY, []);
 
   // ====================
@@ -135,15 +132,59 @@ taskForm.addEventListener("submit", function (event) {
 
 let editingTaskId = null;
 let deletingTaskId = null;
+let currentFilter = "all";
+let searchQuery = "";
+
+const todayTasks = document.getElementById("todayTasks");
+const dueTasks = document.getElementById("dueTasks");
+const upcomingTasks = document.getElementById("upcomingTasks");
+const todayTaskCount = document.getElementById("todayTaskCount");
+const dueTaskCount = document.getElementById("dueTaskCount");
+const deleteTaskModal = document.getElementById("deleteTaskModal");
+const cancelDelete = document.getElementById("cancelDelete");
+const confirmDelete = document.getElementById("confirmDelete");
+const taskSearch = document.getElementById("taskSearch");
+const taskModalTitle = taskModal.querySelector("h2");
+const taskModalLabel = taskModal.querySelector("p");
+const taskSubmitButton = taskForm.querySelector('button[type="submit"]');
 
 function displayTasks() {
   const currentUser = getCurrentUser();
-
   const tasks = getData(TASKS_KEY, []);
-
   const userTasks = tasks.filter(function (task) {
     return task.userId === currentUser.id;
   });
+
+  let filteredTasks = userTasks;
+
+  // ====================
+  // Filter Tasks
+  // ====================
+
+  if (currentFilter === "active") {
+    filteredTasks = filteredTasks.filter(function (task) {
+      return !task.completed;
+    });
+  }
+
+  if (currentFilter === "completed") {
+    filteredTasks = filteredTasks.filter(function (task) {
+      return task.completed;
+    });
+  }
+
+  // ====================
+  // Search Tasks
+  // ====================
+
+  if (searchQuery !== "") {
+    filteredTasks = filteredTasks.filter(function (task) {
+      return (
+        task.name.toLowerCase().includes(searchQuery) ||
+        task.description.toLowerCase().includes(searchQuery)
+      );
+    });
+  }
 
   const today = new Date();
 
@@ -154,17 +195,6 @@ function displayTasks() {
     "-" +
     String(today.getDate()).padStart(2, "0");
 
-  const todayTasks = document.getElementById("todayTasks");
-  const dueTasks = document.getElementById("dueTasks");
-  const upcomingTasks = document.getElementById("upcomingTasks");
-  const todayTaskCount = document.getElementById("todayTaskCount");
-  const dueTaskCount = document.getElementById("dueTaskCount");
-  const taskModal = document.getElementById("taskModal");
-  const taskForm = document.getElementById("taskForm");
-  const deleteTaskModal = document.getElementById("deleteTaskModal");
-  const cancelDelete = document.getElementById("cancelDelete");
-  const confirmDelete = document.getElementById("confirmDelete");
-
   todayTasks.innerHTML = "";
   dueTasks.innerHTML = "";
   upcomingTasks.innerHTML = "";
@@ -172,11 +202,7 @@ function displayTasks() {
   let todayCount = 0;
   let dueCount = 0;
 
-  const taskModalTitle = taskModal.querySelector("h2");
-  const taskModalLabel = taskModal.querySelector("p");
-  const taskSubmitButton = taskForm.querySelector('button[type="submit"]');
-
-  userTasks.forEach(function (task) {
+  filteredTasks.forEach(function (task) {
     const taskElement = document.createElement("div");
 
     taskElement.className =
@@ -325,8 +351,44 @@ function displayTasks() {
     });
   });
 
+  const filterButtons = document.querySelectorAll("[data-filter]");
+
+  filterButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      currentFilter = button.dataset.filter;
+
+      filterButtons.forEach(function (filterButton) {
+        filterButton.classList.remove("bg-[#2F3033]", "text-white");
+
+        filterButton.classList.add(
+          "border",
+          "border-[#D8D5CF]",
+          "bg-white",
+          "text-[#6B6B6B]",
+        );
+      });
+
+      button.classList.remove(
+        "border",
+        "border-[#D8D5CF]",
+        "bg-white",
+        "text-[#6B6B6B]",
+      );
+
+      button.classList.add("bg-[#2F3033]", "text-white");
+
+      displayTasks();
+    });
+  });
+
   lucide.createIcons();
 }
+
+taskSearch.addEventListener("input", function () {
+  searchQuery = taskSearch.value.trim().toLowerCase();
+
+  displayTasks();
+});
 
 displayTasks();
 
