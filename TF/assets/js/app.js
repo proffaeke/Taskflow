@@ -16,3 +16,23 @@ if (menuBtn && mobileMenu) {
     lucide.createIcons();
   });
 }
+
+const revealElements = document.querySelectorAll(".reveal-up");
+
+const revealObserver = new IntersectionObserver(
+  (entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("show");
+        observer.unobserve(entry.target);
+      }
+    });
+  },
+  {
+    threshold: 0.15,
+  },
+);
+
+revealElements.forEach((element) => {
+  revealObserver.observe(element);
+});
