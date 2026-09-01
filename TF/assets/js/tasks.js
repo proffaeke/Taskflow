@@ -132,7 +132,7 @@ taskForm.addEventListener("submit", function (event) {
 
 let editingTaskId = null;
 let deletingTaskId = null;
-let currentFilter = "all";
+let currentFilter = localStorage.getItem("taskflow_filter") || "all";
 let searchQuery = "";
 
 const todayTasks = document.getElementById("todayTasks");
@@ -147,6 +147,11 @@ const taskSearch = document.getElementById("taskSearch");
 const taskModalTitle = taskModal.querySelector("h2");
 const taskModalLabel = taskModal.querySelector("p");
 const taskSubmitButton = taskForm.querySelector('button[type="submit"]');
+const clearAllTasks = document.getElementById("clearAllTasks");
+const clearAllModal = document.getElementById("clearAllModal");
+const cancelClearAll = document.getElementById("cancelClearAll");
+const confirmClearAll = document.getElementById("confirmClearAll");
+const clearAllDescription = document.getElementById("clearAllDescription");
 
 function displayTasks() {
   const currentUser = getCurrentUser();
@@ -352,10 +357,32 @@ function displayTasks() {
   });
 
   const filterButtons = document.querySelectorAll("[data-filter]");
+  filterButtons.forEach(function (button) {
+    if (button.dataset.filter === currentFilter) {
+      button.classList.remove(
+        "border",
+        "border-[#D8D5CF]",
+        "bg-white",
+        "text-[#6B6B6B]",
+      );
+
+      button.classList.add("bg-[#2F3033]", "text-white");
+    } else {
+      button.classList.remove("bg-[#2F3033]", "text-white");
+
+      button.classList.add(
+        "border",
+        "border-[#D8D5CF]",
+        "bg-white",
+        "text-[#6B6B6B]",
+      );
+    }
+  });
 
   filterButtons.forEach(function (button) {
     button.addEventListener("click", function () {
       currentFilter = button.dataset.filter;
+      localStorage.setItem("taskflow_filter", currentFilter);
 
       filterButtons.forEach(function (filterButton) {
         filterButton.classList.remove("bg-[#2F3033]", "text-white");
@@ -412,6 +439,58 @@ confirmDelete.addEventListener("click", function () {
 
   deleteTaskModal.classList.add("hidden");
   deleteTaskModal.classList.remove("flex");
+
+  displayTasks();
+});
+
+clearAllTasks.addEventListener("click", function () {
+  if (currentFilter === "all") {
+    clearAllDescription.textContent =
+      "This will permanently delete all of your tasks. This action cannot be undone.";
+  }
+  if (currentFilter === "active") {
+    clearAllDescription.textContent =
+      "This will permanently delete all of your active tasks. This action cannot be undone.";
+  }
+  if (currentFilter === "completed") {
+    clearAllDescription.textContent =
+      "This will permanently delete all of your completed tasks. This action cannot be undone.";
+  }
+  clearAllModal.classList.remove("hidden");
+  clearAllModal.classList.add("flex");
+});
+
+cancelClearAll.addEventListener("click", function () {
+  clearAllModal.classList.add("hidden");
+  clearAllModal.classList.remove("flex");
+});
+
+confirmClearAll.addEventListener("click", function () {
+  const currentUser = getCurrentUser();
+  const tasks = getData(TASKS_KEY, []);
+
+  const remainingTasks = tasks.filter(function (task) {
+    if (task.userId !== currentUser.id) {
+      return true;
+    }
+
+    if (currentFilter === "all") {
+      return false;
+    }
+
+    if (currentFilter === "active") {
+      return task.completed;
+    }
+
+    if (currentFilter === "completed") {
+      return !task.completed;
+    }
+    return true;
+  });
+
+  saveData(TASKS_KEY, remainingTasks);
+  clearAllModal.classList.add("hidden");
+  clearAllModal.classList.remove("flex");
 
   displayTasks();
 });
