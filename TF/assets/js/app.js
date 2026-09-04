@@ -20,11 +20,12 @@ if (menuBtn && mobileMenu) {
 const revealElements = document.querySelectorAll(".reveal-up");
 
 const revealObserver = new IntersectionObserver(
-  (entries, observer) => {
+  (entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("show");
-        observer.unobserve(entry.target);
+      } else {
+        entry.target.classList.remove("show");
       }
     });
   },
