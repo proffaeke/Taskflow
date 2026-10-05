@@ -17,7 +17,7 @@ loginForm.addEventListener("submit", function (event) {
   }
 
   // Login successful
-  createSession(result.user.id);
+  createSession(result.user);
 
   window.location.href = "./dashboard.html";
 });
