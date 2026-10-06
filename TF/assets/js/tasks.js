@@ -28,6 +28,13 @@ sidebarOverlay.addEventListener("click", () => {
   sidebarOverlay.classList.add("hidden");
 });
 
+function getLocalDateString(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
 // ====================
 // Add Task Modal
 // ====================
@@ -40,6 +47,10 @@ const cancelTask = document.getElementById("cancelTask");
 // Open Modal
 
 addTaskBtn.addEventListener("click", function () {
+  const today = getLocalDateString(new Date());
+  const dueDateInput = document.getElementById("taskDueDate");
+  dueDateInput.min = today;
+  dueDateInput.value = today;
   taskModal.classList.remove("hidden");
   taskModal.classList.add("flex");
 });
@@ -67,7 +78,18 @@ const taskForm = document.getElementById("taskForm");
 taskForm.addEventListener("submit", function (event) {
   event.preventDefault();
 
-  const taskName = document.getElementById("taskName").value.trim();
+  const taskNameInput = document.getElementById("taskName");
+  const taskNameError = document.getElementById("taskNameError");
+
+  const taskName = taskNameInput.value.trim();
+
+  if (!taskName) {
+    taskNameError.classList.remove("hidden");
+    taskNameInput.focus();
+    return;
+  }
+
+  taskNameError.classList.add("hidden");
 
   const taskDescription = document
     .getElementById("taskDescription")

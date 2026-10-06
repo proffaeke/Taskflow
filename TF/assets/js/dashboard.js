@@ -161,6 +161,10 @@ const closeQuickAddModal = document.getElementById("closeQuickAddModal");
 const cancelQuickAdd = document.getElementById("cancelQuickAdd");
 
 function openQuickAddModal() {
+  const today = getLocalDateString(new Date());
+  const dueDateInput = document.getElementById("quickTaskDueDate");
+  dueDateInput.min = today;
+  dueDateInput.value = today;
   quickAddModal.classList.remove("hidden");
   quickAddModal.classList.add("flex");
 }
@@ -183,17 +187,22 @@ const quickAddForm = document.getElementById("quickAddForm");
 quickAddForm.addEventListener("submit", function (event) {
   event.preventDefault();
 
-  const taskName = document.getElementById("quickTaskName").value.trim();
+  const taskNameInput = document.getElementById("quickTaskName");
+  const taskNameError = document.getElementById("quickTaskNameError");
+  const taskName = taskNameInput.value.trim();
+
+  if (!taskName) {
+    taskNameError.classList.remove("hidden");
+    taskNameInput.focus();
+    return;
+  }
+
+  taskNameError.classList.add("hidden");
   const taskDescription = document
     .getElementById("quickTaskDescription")
     .value.trim();
   const taskDueDate = document.getElementById("quickTaskDueDate").value;
   const taskPriority = document.getElementById("quickTaskPriority").value;
-
-  if (!taskName) {
-    alert("Please enter a task name.");
-    return;
-  }
 
   const tasks = getData(STORAGE_KEYS.tasks);
   const newTask = {
