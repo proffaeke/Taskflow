@@ -225,11 +225,25 @@ quickAddForm.addEventListener("submit", function (event) {
 });
 
 // ====================
-// Logout
+// Logout Confirmation Modal
 // ====================
 
 const logoutBtn = document.getElementById("logoutBtn");
-logoutBtn.addEventListener("click", function () {
+const logoutModal = document.getElementById("logoutModal");
+const cancelLogout = document.getElementById("cancelLogout");
+const confirmLogout = document.getElementById("confirmLogout");
+
+logoutBtn.addEventListener("click", function (event) {
+  event.preventDefault();
+
+  logoutModal.classList.remove("hidden");
+  logoutModal.classList.add("flex");
+});
+cancelLogout.addEventListener("click", function () {
+  logoutModal.classList.add("hidden");
+  logoutModal.classList.remove("flex");
+});
+confirmLogout.addEventListener("click", function () {
   logoutUser();
   window.location.href = "./login.html";
 });
