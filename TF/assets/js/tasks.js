@@ -1,7 +1,17 @@
-requireAuth();
+const currentUser = requireAuth();
+
+if (currentUser) {
+  const headerUserName = document.getElementById("headerUserName");
+  const userInitial = document.getElementById("userInitial");
+  if (headerUserName) {
+    headerUserName.textContent = currentUser.name.split(" ")[0];
+  }
+  if (userInitial) {
+    userInitial.textContent = currentUser.name.charAt(0).toUpperCase();
+  }
+}
 
 lucide.createIcons();
-
 // ====================
 // Task Storage
 // ====================
