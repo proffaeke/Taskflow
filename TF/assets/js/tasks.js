@@ -59,8 +59,25 @@ const cancelTask = document.getElementById("cancelTask");
 addTaskBtn.addEventListener("click", function () {
   const today = getLocalDateString(new Date());
   const dueDateInput = document.getElementById("taskDueDate");
+
+  // Set today's date
   dueDateInput.min = today;
   dueDateInput.value = today;
+
+  // Load the user's default task priority from Settings
+  const currentUser = getCurrentUser();
+  const priorityStorageKey = `taskflow_default_priority_${currentUser.id}`;
+  const savedPriority = localStorage.getItem(priorityStorageKey);
+  const taskPriority = document.getElementById("taskPriority");
+  const allowedPriorities = ["Low", "Medium", "High"];
+
+  if (allowedPriorities.includes(savedPriority)) {
+    taskPriority.value = savedPriority.toLowerCase();
+  } else {
+    taskPriority.value = "medium";
+  }
+
+  // Open the Add Task modal
   taskModal.classList.remove("hidden");
   taskModal.classList.add("flex");
 });
@@ -188,11 +205,26 @@ const clearAllDescription = document.getElementById("clearAllDescription");
 function displayTasks() {
   const currentUser = getCurrentUser();
   const tasks = getData(TASKS_KEY, []);
+
   const userTasks = tasks.filter(function (task) {
     return task.userId === currentUser.id;
   });
 
-  let filteredTasks = userTasks;
+  // Read the Show Completed Tasks preference
+  const showCompletedStorageKey = `taskflow_show_completed_${currentUser.id}`;
+
+  const savedShowCompleted = localStorage.getItem(showCompletedStorageKey);
+
+  // Default to ON if the user has never changed the setting
+  const showCompletedEnabled =
+    savedShowCompleted === null || savedShowCompleted === "true";
+
+  // Hide completed tasks when the preference is OFF
+  let filteredTasks = showCompletedEnabled
+    ? userTasks
+    : userTasks.filter(function (task) {
+        return !task.completed;
+      });
 
   // ====================
   // Filter Tasks

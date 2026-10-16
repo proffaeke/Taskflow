@@ -149,6 +149,7 @@ todayTasksContainer.addEventListener("change", function (event) {
   });
 
   displayTodayTasks();
+  renderTaskReminders();
 });
 
 // ====================
@@ -159,6 +160,15 @@ const quickAddTaskBtn = document.getElementById("quickAddTaskBtn");
 const quickAddModal = document.getElementById("quickAddModal");
 const closeQuickAddModal = document.getElementById("closeQuickAddModal");
 const cancelQuickAdd = document.getElementById("cancelQuickAdd");
+const priorityStorageKey = `taskflow_default_priority_${currentUser.id}`;
+const savedPriority = localStorage.getItem(priorityStorageKey);
+const quickTaskPriority = document.getElementById("quickTaskPriority");
+const allowedPriorities = ["Low", "Medium", "High"];
+if (quickTaskPriority) {
+  quickTaskPriority.value = allowedPriorities.includes(savedPriority)
+    ? savedPriority.toLowerCase()
+    : "medium";
+}
 
 function openQuickAddModal() {
   const today = getLocalDateString(new Date());
@@ -221,6 +231,7 @@ quickAddForm.addEventListener("submit", function (event) {
   closeQuickAddTaskModal();
   updateTaskStatistics();
   displayTodayTasks();
+  renderTaskReminders();
   renderTaskProgressChart(selectedPeriod);
 });
 
