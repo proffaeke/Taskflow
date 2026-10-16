@@ -227,12 +227,41 @@ editProfileForm.addEventListener("submit", function (event) {
 // ====================
 
 const logoutBtn = document.getElementById("logoutBtn");
+const settingsLogoutBtn = document.getElementById("settingsLogoutBtn");
+const logoutModal = document.getElementById("logoutModal");
+const cancelLogoutBtn = document.getElementById("cancelLogout");
+const confirmLogoutBtn = document.getElementById("confirmLogout");
 
-logoutBtn.addEventListener("click", function () {
+function openLogoutModal() {
+  if (!logoutModal) return;
+  logoutModal.classList.remove("hidden");
+  logoutModal.classList.add("flex");
+}
+
+function closeLogoutModal() {
+  if (!logoutModal) return;
+  logoutModal.classList.add("hidden");
+  logoutModal.classList.remove("flex");
+}
+function handleLogoutClick() {
+  openLogoutModal();
+}
+function confirmLogout() {
   logoutUser();
-
   window.location.href = "./login.html";
-});
+}
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", handleLogoutClick);
+}
+if (settingsLogoutBtn) {
+  settingsLogoutBtn.addEventListener("click", handleLogoutClick);
+}
+if (cancelLogoutBtn) {
+  cancelLogoutBtn.addEventListener("click", closeLogoutModal);
+}
+if (confirmLogoutBtn) {
+  confirmLogoutBtn.addEventListener("click", confirmLogout);
+}
 
 // ====================
 // Load Saved Profile
@@ -386,7 +415,11 @@ changePasswordForm.addEventListener("submit", (event) => {
   users[userIndex].password = newPassword;
   saveData(STORAGE_KEYS.users, users);
 
-  // Clear the password fields and show confirmation.
-  changePasswordForm.reset();
+  // Show success message.
   showPasswordMessage("Password updated successfully!", true);
+
+  // Close the modal after a short delay.
+  setTimeout(() => {
+    closePasswordModal();
+  }, 1200);
 });
