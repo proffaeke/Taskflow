@@ -3,9 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>Log In | TaskFlow</title>
-
     <link href="./assets/src/output.css" rel="stylesheet" />
   </head>
 
@@ -84,7 +82,7 @@
                 </label>
 
                 <a
-                  href="#"
+                  href="./forgot-password.html"
                   class="text-xs font-medium text-[#6B6B6B] transition hover:text-[#B89B5E]"
                 >
                   Forgot password?
@@ -101,18 +99,13 @@
               />
             </div>
 
-            <!-- Remember Me -->
-            <div class="flex items-center gap-2">
-              <input
-                type="checkbox"
-                id="remember"
-                class="h-4 w-4 accent-[#B89B5E]"
-              />
-
-              <label for="remember" class="text-sm text-[#6B6B6B]">
-                Remember me
-              </label>
-            </div>
+            <!-- Login Feedback Message -->
+            <div
+              id="loginMessage"
+              class="hidden border px-4 py-3 text-sm"
+              role="alert"
+              aria-live="polite"
+            ></div>
 
             <!-- Login Button -->
             <button
