@@ -33,6 +33,6 @@ signupForm.addEventListener("submit", function (event) {
   }
 
   const newUser = createUser(name, email, password);
-  createSession(newUser.id);
+  createSession(newUser);
   window.location.href = "./dashboard.html";
 });

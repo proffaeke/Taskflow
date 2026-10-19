@@ -457,6 +457,31 @@
                     class="h-5 w-5 shrink-0 text-[#9A9A9A]"
                   ></i>
                 </button>
+
+                <!-- Privacy & Data -->
+                <button
+                  id="privacyDataBtn"
+                  type="button"
+                  class="flex w-full items-center gap-4 px-6 py-5 text-left transition hover:bg-[#FAF9F7] md:px-8"
+                >
+                  <div
+                    class="flex h-10 w-10 shrink-0 items-center justify-center bg-[#F8F7F4] text-[#6B6B6B]"
+                  >
+                    <i data-lucide="shield-check" class="h-5 w-5"></i>
+                  </div>
+
+                  <div class="flex-1">
+                    <p class="text-sm font-medium">Privacy &amp; Data</p>
+                    <p class="mt-1 text-xs text-[#9A9A9A]">
+                      Learn how TaskFlow handles your information.
+                    </p>
+                  </div>
+
+                  <i
+                    data-lucide="chevron-right"
+                    class="h-4 w-4 text-[#9A9A9A]"
+                  ></i>
+                </button>
               </div>
             </section>
 
@@ -531,6 +556,33 @@
                   <i
                     data-lucide="chevron-right"
                     class="h-5 w-5 shrink-0 text-[#9A9A9A]"
+                  ></i>
+                </button>
+
+                <!-- Delete Account -->
+                <button
+                  id="deleteAccountBtn"
+                  type="button"
+                  class="flex w-full items-center gap-4 px-6 py-5 text-left transition hover:bg-red-50 md:px-8"
+                >
+                  <div
+                    class="flex h-10 w-10 shrink-0 items-center justify-center bg-red-50 text-red-600"
+                  >
+                    <i data-lucide="user-round-x" class="h-5 w-5"></i>
+                  </div>
+
+                  <div class="flex-1">
+                    <p class="text-sm font-medium text-red-600">
+                      Delete Account
+                    </p>
+                    <p class="mt-1 text-xs text-[#9A9A9A]">
+                      Permanently delete your account and associated data.
+                    </p>
+                  </div>
+
+                  <i
+                    data-lucide="chevron-right"
+                    class="h-4 w-4 text-red-400"
                   ></i>
                 </button>
               </div>
@@ -775,6 +827,54 @@
             class="bg-[#2F3033] px-4 py-2 text-sm text-white transition hover:bg-[#B89B5E]"
           >
             Log Out
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Account Confirmation Modal -->
+    <div
+      id="deleteAccountModal"
+      class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 px-4 py-6"
+    >
+      <div
+        class="w-full max-w-md border border-[#E3E0D9] bg-white p-6 shadow-xl md:p-8"
+      >
+        <div class="flex items-start gap-4">
+          <div
+            class="flex h-11 w-11 shrink-0 items-center justify-center bg-red-50 text-red-600"
+          >
+            <i data-lucide="alert-triangle" class="h-5 w-5"></i>
+          </div>
+
+          <div class="flex-1">
+            <h2 class="text-xl font-semibold text-[#2F3033]">
+              Delete Your Account?
+            </h2>
+
+            <p class="mt-2 text-sm leading-6 text-[#6B6B6B]">
+              This action will permanently delete your account and its
+              associated TaskFlow data. You will not be able to undo this
+              action.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-6 flex flex-wrap justify-end gap-3">
+          <button
+            id="cancelDeleteAccount"
+            type="button"
+            class="border border-[#E3E0D9] px-5 py-3 text-sm font-medium text-[#6B6B6B] transition hover:border-[#2F3033]"
+          >
+            Cancel
+          </button>
+
+          <button
+            id="confirmDeleteAccount"
+            type="button"
+            class="bg-red-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-red-700"
+          >
+            Delete Account
           </button>
         </div>
       </div>

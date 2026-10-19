@@ -423,3 +423,85 @@ changePasswordForm.addEventListener("submit", (event) => {
     closePasswordModal();
   }, 1200);
 });
+
+// ==============================
+// Delete Account Modal
+// ==============================
+
+const deleteAccountBtn = document.getElementById("deleteAccountBtn");
+const deleteAccountModal = document.getElementById("deleteAccountModal");
+const cancelDeleteAccount = document.getElementById("cancelDeleteAccount");
+const confirmDeleteAccount = document.getElementById("confirmDeleteAccount");
+
+confirmDeleteAccount.addEventListener("click", function () {
+  const loggedInUser = getCurrentUser();
+  if (!loggedInUser) {
+    window.location.href = "./login.html";
+    return;
+  }
+
+  // Get all saved accounts and tasks.
+  const users = getData(STORAGE_KEYS.users);
+  const tasks = getData(STORAGE_KEYS.tasks);
+
+  // Remove only the current user's account.
+  const updatedUsers = users.filter((user) => user.id !== loggedInUser.id);
+
+  // Remove only the current user's tasks.
+  const updatedTasks = tasks.filter((task) => task.userId !== loggedInUser.id);
+
+  // Save the remaining accounts and tasks.
+  saveData(STORAGE_KEYS.users, updatedUsers);
+  saveData(STORAGE_KEYS.tasks, updatedTasks);
+
+  // Remove this user's TaskFlow preferences.
+  localStorage.removeItem(`taskflow_reminders_${loggedInUser.id}`);
+  localStorage.removeItem(`taskflow_show_completed_${loggedInUser.id}`);
+  localStorage.removeItem(`taskflow_default_priority_${loggedInUser.id}`);
+
+  // Log out and return to the login page.
+  logoutUser();
+  window.location.href = "./login.html";
+});
+
+function openDeleteAccountModal() {
+  if (!deleteAccountModal) return;
+
+  deleteAccountModal.classList.remove("hidden");
+  deleteAccountModal.classList.add("flex");
+}
+
+function closeDeleteAccountModal() {
+  if (!deleteAccountModal) return;
+
+  deleteAccountModal.classList.add("hidden");
+  deleteAccountModal.classList.remove("flex");
+}
+
+if (deleteAccountBtn) {
+  deleteAccountBtn.addEventListener("click", openDeleteAccountModal);
+}
+
+if (cancelDeleteAccount) {
+  cancelDeleteAccount.addEventListener("click", closeDeleteAccountModal);
+}
+
+// Close when clicking the dark background.
+if (deleteAccountModal) {
+  deleteAccountModal.addEventListener("click", (event) => {
+    if (event.target === deleteAccountModal) {
+      closeDeleteAccountModal();
+    }
+  });
+}
+
+// Close when pressing Escape.
+document.addEventListener("keydown", (event) => {
+  if (
+    event.key === "Escape" &&
+    deleteAccountModal &&
+    !deleteAccountModal.classList.contains("hidden")
+  ) {
+    closeDeleteAccountModal();
+  }
+});
