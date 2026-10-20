@@ -51,7 +51,7 @@
           </div>
 
           <!-- Signup Form -->
-          <form id="signupForm" class="space-y-5">
+          <form id="signupForm" class="space-y-5" novalidate>
             <!-- Full Name -->
             <div>
               <label
@@ -127,6 +127,15 @@
                 class="w-full border border-[#D8D5CF] bg-white px-4 py-3.5 text-sm text-[#2F3033] outline-none transition placeholder:text-[#A3A3A3] focus:border-[#B89B5E] focus:ring-1 focus:ring-[#B89B5E]"
               />
             </div>
+
+            <!-- Signup Feedback Message -->
+            <div
+              id="signupMessage"
+              class="hidden border px-4 py-3 text-sm"
+              role="alert"
+              aria-live="polite"
+            ></div>
+
             <!-- Signup Button -->
             <button
               type="submit"

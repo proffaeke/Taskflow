@@ -1,3 +1,5 @@
+lucide.createIcons();
+
 const resetPasswordForm = document.getElementById("resetPasswordForm");
 const newPasswordInput = document.getElementById("newPassword");
 const confirmPasswordInput = document.getElementById("confirmPassword");
@@ -26,11 +28,12 @@ if (!resetEmail) {
   showResetMessage(
     "No password reset request was found. Please start from the Forgot Password page.",
   );
+  resetPasswordForm.querySelector('button[type="submit"]').disabled = true;
+  newPasswordInput.disabled = true;
+  confirmPasswordInput.disabled = true;
 }
-
 newPasswordInput.addEventListener("input", hideResetMessage);
 confirmPasswordInput.addEventListener("input", hideResetMessage);
-
 resetPasswordForm.addEventListener("submit", function (event) {
   event.preventDefault();
   hideResetMessage();
@@ -47,18 +50,32 @@ resetPasswordForm.addEventListener("submit", function (event) {
     showResetMessage("Please fill in both password fields.");
     return;
   }
-
   if (newPassword.length < 8) {
     showResetMessage("Your new password must contain at least 8 characters.");
     newPasswordInput.focus();
     return;
   }
-
   if (newPassword !== confirmPassword) {
     showResetMessage("Your passwords do not match. Please try again.");
     confirmPasswordInput.focus();
     return;
   }
 
-  // We'll save the new password in the next step.
+  const users = getData(STORAGE_KEYS.users);
+  const userIndex = users.findIndex((user) => user.email === resetEmail);
+
+  if (userIndex === -1) {
+    showResetMessage("We couldn't find your account. Please start again.");
+    return;
+  }
+
+  users[userIndex].password = newPassword;
+  saveData(STORAGE_KEYS.users, users);
+  sessionStorage.removeItem("taskflow_reset_email");
+  showResetMessage(
+    "Your password has been reset successfully! You can now log in with your new password.",
+    "success",
+  );
+
+  resetPasswordForm.reset();
 });
