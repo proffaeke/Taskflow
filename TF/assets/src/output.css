@@ -376,6 +376,9 @@
   .h-72 {
     height: calc(var(--spacing) * 72);
   }
+  .h-dvh {
+    height: 100dvh;
+  }
   .h-full {
     height: 100%;
   }
